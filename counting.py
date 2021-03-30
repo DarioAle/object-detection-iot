@@ -3,7 +3,9 @@ import imutils
 import numpy as np
 import matplotlib.pyplot as plt
 
-image = cv2.imread("coins.jpg")
+# Do not use it doesn't work that well
+
+image = cv2.imread("./img-coins/coins3.jpg")
 
 image_blur = cv2.medianBlur(image,25) # image , blurring rate
 
@@ -23,14 +25,15 @@ cnts = cv2.findContours(last_image.copy(), cv2.RETR_EXTERNAL,
 	cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
 
-print("Count of coins is: " + str(cnts))
+
 
 def display(img,count,cmap="gray"):
     f_image = cv2.imread("coins.jpg")
     f, axs = plt.subplots(1,2,figsize=(12,5))
-    axs[0].imshow(f_image,cmap="gray")
+    # axs[0].imshow(f_image,cmap="gray")
     axs[1].imshow(img,cmap="gray")
     axs[1].set_title("Total Money Count = {}".format(count))
+    plt.savefig('./imgs2/coins-numbered.png')
 
 for (i, c) in enumerate(cnts):
 	((x, y), _) = cv2.minEnclosingCircle(c)
@@ -39,3 +42,4 @@ for (i, c) in enumerate(cnts):
 	cv2.drawContours(image, [c], -1, (0, 255, 0), 2)
 
 display(image,len(cnts))
+# print('Number of objects is: {}'.format(count))
